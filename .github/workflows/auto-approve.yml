@@ -1,12 +1,18 @@
 name: Auto approve
 
-on: pull_request_target
+on: pull_request
 
 jobs:
-  auto-approve:
+  run:
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       pull-requests: write
     if: github.actor == 'dependabot[bot]'
     steps:
-      - uses: hmarr/auto-approve-action@v3
+      - name: "Approve"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        run: gh pr review --approve --repo $REPOSITORY $PR_NUMBER --comment "Auto-approved by auto-approve.yml"
