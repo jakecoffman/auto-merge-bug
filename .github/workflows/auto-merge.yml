@@ -9,11 +9,10 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    if: github.actor == 'dependabot[bot]'
     steps:
       - name: "Enable Auto-Merge"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
-        run: gh pr merge --repo $REPOSITORY $PR_NUMBER --auto --squash
+        run: gh pr merge --repo $REPOSITORY $PR_NUMBER --auto --merge
