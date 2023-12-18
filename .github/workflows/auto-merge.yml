@@ -9,7 +9,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    if: github.actor == 'dependabot[bot]'
     steps:
       - name: "Enable Auto-Merge"
         env:
